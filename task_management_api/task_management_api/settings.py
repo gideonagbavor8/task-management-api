@@ -33,6 +33,20 @@ REST_FRAMEWORK = {
     ],
 }
 
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+}
+
+
+# REST_FRAMEWORK = {
+#     'EXCEPTION_HANDLER': 'task_management_api.exception_handler.custom_exception_handler',
+#     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+# }
+
+
 
 # Application definition
 
@@ -45,6 +59,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'tasks',
+    'django_filters',
+    'notifications',
 ]
 
 MIDDLEWARE = [
@@ -129,3 +145,17 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Notification settings
+# Email settings for sending notifications
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'gideonagbavor8@gmail.com'  # Replace with your email
+EMAIL_HOST_PASSWORD = '05545Komla@47692@'  # Replace with your email password
+
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
