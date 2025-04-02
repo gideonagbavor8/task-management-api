@@ -40,7 +40,6 @@ The Task Management API is a backend application built using Django and Django R
     - Due Date
     - Priority Level
 
----
 
 ## API Endpoints
 
@@ -77,3 +76,4 @@ The Task Management API is a backend application built using Django and Django R
 - **Due Date Validation:** Tasks cannot have a due date in the past.
 - **Unique Username Validation:** Usernames must be unique during registration.
 - **Category Ownership:** Categories are user-specific and cannot be accessed by other users.
+
