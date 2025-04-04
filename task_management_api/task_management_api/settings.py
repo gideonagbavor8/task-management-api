@@ -23,10 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-5k!270)ecz9*vrwqw9d^)f5bs0*yy+qcbfib(-nq+33nwjd5pw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-# ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['gideonagbavor8.pythonanywhere.com']
+ALLOWED_HOSTS = []
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -100,12 +99,8 @@ WSGI_APPLICATION = 'task_management_api.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',  # Replace with your database name
-        'USER': 'postgres',  # Replace with your PostgreSQL username
-        'PASSWORD': '05545komla47692',  # Replace with your PostgreSQL password
-        'HOST': '127.0.0.1',  # Use '127.0.0.1' or your database server's IP
-        'PORT': '5432',  # Default PostgreSQL port
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -144,9 +139,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-# STATIC_URL = '/static/'
-STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
