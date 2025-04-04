@@ -41,10 +41,10 @@ SIMPLE_JWT = {
 }
 
 
-# REST_FRAMEWORK = {
-#     'EXCEPTION_HANDLER': 'task_management_api.exception_handler.custom_exception_handler',
-#     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
-# }
+REST_FRAMEWORK = {
+    'EXCEPTION_HANDLER': 'task_management_api.exception_handler.custom_exception_handler',
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+}
 
 
 
