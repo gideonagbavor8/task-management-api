@@ -69,6 +69,7 @@ class TaskViewSet(viewsets.ModelViewSet):
 class CategoryViewSet(viewsets.ModelViewSet):
     serializer_class = CategorySerializer
     permission_classes = [IsAuthenticated]
+    queryset = Category.objects.all()
 
     def get_queryset(self):
         return Category.objects.filter(user=self.request.user)
