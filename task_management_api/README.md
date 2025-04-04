@@ -77,3 +77,61 @@ The Task Management API is a backend application built using Django and Django R
 - **Unique Username Validation:** Usernames must be unique during registration.
 - **Category Ownership:** Categories are user-specific and cannot be accessed by other users.
 
+
+
+### **Task Management**
+- **GET /api/tasks/**: Retrieve all tasks for the authenticated user.
+  - **Headers**: `Authorization: Bearer <access_token>`
+  - **Response (200 OK)**:
+    ```json
+    [
+      {
+        "id": 1,
+        "title": "Task 1",
+        "description": "Complete the report.",
+        "due_date": "2025-04-15T12:00:00Z",
+        "priority_level": "High",
+        "status": "Pending",
+        "completed_timestamp": null
+      }
+    ]
+    ```
+- **POST /api/tasks/**: Create a new task.
+  - **Headers**: `Authorization: Bearer <access_token>`
+  - **Request Body**:
+    ```json
+    {
+      "title": "New Task",
+      "description": "This is a test task.",
+      "due_date": "2025-04-15T12:00:00Z",
+      "priority_level": "High",
+      "status": "Pending"
+    }
+    ```
+  - **Response (201 Created)**:
+    ```json
+    {
+      "id": 1,
+      "title": "New Task",
+      "description": "This is a test task.",
+      "due_date": "2025-04-15T12:00:00Z",
+      "priority_level": "High",
+      "status": "Pending",
+      "completed_timestamp": null
+    }
+    ```
+
+- **PATCH /api/tasks/<id>/mark_complete/**: Mark a task as complete.
+  - **Headers**: `Authorization: Bearer <access_token>`
+  - **Response (200 OK)**:
+    ```json
+    {
+      "status": "Task marked as complete"
+    }
+    ```
+  - **Error (400 Bad Request)**:
+    ```json
+    {
+      "detail": "Task is already marked as complete."
+    }
+    ```
