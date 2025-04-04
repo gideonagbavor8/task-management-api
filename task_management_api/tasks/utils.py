@@ -17,3 +17,15 @@ def send_due_soon_notifications():
             from_email='gideonagbavor8@gmail.com',
             recipient_list=[task.user.email],
         )
+
+from rest_framework.exceptions import NotFound
+
+def get_task_or_error(pk, user):
+    """
+    Utility function to get a task by its primary key and user.
+    Raises NotFound if the task does not exist.
+    """
+    try:
+        return Task.objects.get(pk=pk, user=user)
+    except Task.DoesNotExist:
+        raise NotFound("Task not found.")

@@ -8,11 +8,13 @@ from rest_framework.filters import OrderingFilter
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.utils.timezone import now
-# from rest_framework import serializers
 from rest_framework.exceptions import NotFound
 from rest_framework.views import APIView
 from rest_framework import status
-# from .serializers import UserRegistrationSerializer
+from .utils import get_task_or_error
+
+
+
 
 class TaskViewSet(viewsets.ModelViewSet):
     serializer_class = TaskSerializer
@@ -31,21 +33,21 @@ class TaskViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
-    # def retrieve(self, request, *args, **kwargs):
-    #     task = self.get_object()
-    #     if task.user != request.user:
-    #         raise PermissionDenied("You are not allowed to access this task.")
-    #     return super().retrieve(request, *args, **kwargs)
     
-    def get_task_or_error(pk, user):
-        try:
-            return Task.objects.get(pk=pk, user=user)
-        except Task.DoesNotExist:
-            raise NotFound("Task not found.")
+    # def get_task_or_error(pk, user):
+    #     try:
+    #         return Task.objects.get(pk=pk, user=user)
+    #     except Task.DoesNotExist:
+    #         raise NotFound("Task not found.")
     
     @action(detail=True, methods=['patch'])
     def mark_complete(self, request, pk=None):
         task = self.get_object()
+        task = get_task_or_error(pk=pk, user=request.user)
+
+        # Add validation to avoid redundant state change
+        if task.status == 'Completed':
+            return Response({'detail': 'Task is already marked as complete.'}, status=400)
         task.status = 'Completed'
         task.completed_timestamp = now()
         task.save()
@@ -54,6 +56,10 @@ class TaskViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['patch'])
     def mark_incomplete(self, request, pk=None):
         task = self.get_object()
+
+        # Add validation to avoid redundant state change
+        if task.status == 'Pending':
+            return Response({'detail': 'Task is already marked as incomplete.'}, status=400)
         task.status = 'Pending'
         task.completed_timestamp = None
         task.save()
@@ -87,3 +93,4 @@ class UserRegistrationView(APIView):
             return Response({"message": "User created successfully"}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+
