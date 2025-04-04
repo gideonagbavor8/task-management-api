@@ -27,6 +27,7 @@ class Task(models.Model):
     priority_level = models.CharField(max_length=10, choices=PRIORITY_CHOICES)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Pending')
     completed_timestamp = models.DateTimeField(null=True, blank=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='tasks', null=True, blank=True)  # Link tasks to categories
 
     def __str__(self):
         return self.title
