@@ -16,12 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework.routers import DefaultRouter
+from rest_framework.routers import SimpleRouter
 from tasks.views import TaskViewSet, UserViewSet, CategoryViewSet, UserRegistrationView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 
-router = DefaultRouter()
+router = SimpleRouter()
 router.register('tasks', TaskViewSet, basename='task')
 router.register('users', UserViewSet, basename='user')
 router.register('categories', CategoryViewSet, basename='category')
