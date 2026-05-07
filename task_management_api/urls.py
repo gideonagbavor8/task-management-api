@@ -15,6 +15,15 @@ router.register('users', UserViewSet, basename='user')
 router.register('categories', CategoryViewSet, basename='category')
 
 
+from django.core.management import call_command
+
+def run_migrations(request):
+    try:
+        call_command('migrate', interactive=False)
+        return JsonResponse({"status": "Success", "message": "Database migrated successfully!"})
+    except Exception as e:
+        return JsonResponse({"status": "Error", "message": str(e)})
+
 def api_root(request):
     return JsonResponse({
         "message": "Welcome to the Task Management API",
@@ -32,6 +41,7 @@ def api_root(request):
 
 
 urlpatterns = [
+    path('migrate-db/', run_migrations, name='run-migrations'),
     path('', api_root, name='api-root'),
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
